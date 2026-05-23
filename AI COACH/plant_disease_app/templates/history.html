@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}History - Plant Disease Detection{% endblock %}
+
+{% block content %}
+<div class="history-page">
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-history"></i> Scan History</h1>
+            <p>All your plant disease detections</p>
+        </div>
+        
+        {% if predictions %}
+        <div class="history-filters">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by plant or disease...">
+            <select id="filterSelect" class="filter-select">
+                <option value="all">All Results</option>
+                <option value="healthy">Healthy Only</option>
+                <option value="diseased">Diseased Only</option>
+            </select>
+        </div>
+        
+        <div class="history-grid" id="historyGrid">
+            {% for prediction in predictions %}
+            <div class="history-card" data-plant="{{ prediction.plant_type }}" data-disease="{{ prediction.disease_name }}">
+                <div class="history-image">
+                    <img src="{{ url_for('static', filename='../uploads/' + prediction.image_path) }}" alt="{{ prediction.plant_type }}">
+                    <div class="history-badge {% if 'healthy' in prediction.disease_name.lower() %}badge-success{% else %}badge-warning{% endif %}">
+                        <i class="fas fa-{% if 'healthy' in prediction.disease_name.lower() %}check{% else %}exclamation{% endif %}"></i>
+                    </div>
+                </div>
+                
+                <div class="history-content">
+                    <h3>{{ prediction.plant_type }}</h3>
+                    <p class="disease-name">
+                        <i class="fas fa-bug"></i> {{ prediction.disease_name }}
+                    </p>
+                    
+                    <div class="history-meta">
+                        <span class="confidence-tag">
+                            <i class="fas fa-percentage"></i> {{ (prediction.confidence * 100)|round(1) }}%
+                        </span>
+                        <span class="date-tag">
+                            <i class="fas fa-calendar"></i> {{ prediction.created_at[:10] }}
+                        </span>
+                    </div>
+                    
+                    <div class="history-actions">
+                        <button class="btn btn-sm btn-outline" onclick="viewDetails({{ prediction.id }})">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="empty-results" id="emptyResults" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>No results found</h3>
+            <p>Try adjusting your search or filter</p>
+        </div>
+        
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-leaf"></i>
+            <h3>No scan history</h3>
+            <p>You haven't scanned any plants yet. Upload your first image to get started!</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">
+                <i class="fas fa-upload"></i> Upload Image
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Details Modal -->
+<div class="modal" id="detailsModal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Scan Details</h2>
+        <div id="modalBody">
+            <!-- Details will be loaded here -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+const filterSelect = document.getElementById('filterSelect');
+const historyCards = document.querySelectorAll('.history-card');
+const emptyResults = document.getElementById('emptyResults');
+
+function filterHistory() {
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const filterValue = filterSelect ? filterSelect.value : 'all';
+    let visibleCount = 0;
+    
+    historyCards.forEach(card => {
+        const plant = card.dataset.plant.toLowerCase();
+        const disease = card.dataset.disease.toLowerCase();
+        const isHealthy = disease.includes('healthy');
+        
+        const matchesSearch = plant.includes(searchTerm) || disease.includes(searchTerm);
+        const matchesFilter = filterValue === 'all' || 
+                             (filterValue === 'healthy' && isHealthy) ||
+                             (filterValue === 'diseased' && !isHealthy);
+        
+        if (matchesSearch && matchesFilter) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    if (emptyResults) {
+        emptyResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+}
+
+if (searchInput) searchInput.addEventListener('input', filterHistory);
+if (filterSelect) filterSelect.addEventListener('change', filterHistory);
+
+// View details modal
+function viewDetails(id) {
+    const modal = document.getElementById('detailsModal');
+    const modalBody = document.getElementById('modalBody');
+    
+    // For now, just show a simple message
+    modalBody.innerHTML = `
+        <p>Details for prediction ID: ${id}</p>
+        <p>More detailed information will be displayed here.</p>
+    `;
+    
+    modal.style.display = 'block';
+}
+
+// Modal close
+const modal = document.getElementById('detailsModal');
+const closeBtn = document.querySelector('.modal-close');
+
+if (closeBtn) {
+    closeBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+}
+
+if (modal) {
+    window.onclick = (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
+</script>
+{% endblock %}

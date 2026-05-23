@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Plant Disease Detection{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Detect Plant Diseases with <span class="gradient-text">AI</span>
+            </h1>
+            <p class="hero-subtitle">
+                Upload an image of your plant and get instant diagnosis powered by deep learning
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fas fa-leaf"></i>
+                    <span class="stat-number">38+</span>
+                    <span class="stat-label">Diseases Detected</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-seedling"></i>
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">Plant Species</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Section -->
+<div class="upload-section">
+    <div class="container">
+        <div class="upload-card">
+            <div class="upload-header">
+                <h2><i class="fas fa-cloud-upload-alt"></i> Upload Plant Image</h2>
+                <p>Drag & drop or click to select an image</p>
+            </div>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <p class="upload-text">Drop your image here or <span class="text-primary">browse</span></p>
+                <p class="upload-hint">Supports: JPG, JPEG, PNG (Max 16MB)</p>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+            
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <img id="imagePreview" alt="Preview">
+                <div class="preview-actions">
+                    <button class="btn btn-primary" id="analyzeBtn">
+                        <i class="fas fa-search"></i> Analyze Image
+                    </button>
+                    <button class="btn btn-outline" id="changeBtn">
+                        <i class="fas fa-exchange-alt"></i> Change Image
+                    </button>
+                </div>
+            </div>
+            
+            <div class="loading-area" id="loadingArea" style="display: none;">
+                <div class="loader"></div>
+                <p>Analyzing your plant image...</p>
+                <p class="text-sm">This may take a few seconds</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Section -->
+<div class="results-section" id="resultsSection" style="display: none;">
+    <div class="container">
+        <h2 class="section-title">Analysis Results</h2>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-image">
+                    <img id="resultImage" alt="Analyzed Plant">
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-header">
+                    <i class="fas fa-leaf result-icon"></i>
+                    <h3>Detection Results</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Plant Type:</label>
+                    <span id="resultPlant" class="result-value"></span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Disease:</label>
+                    <span id="resultDisease" class="result-value"></span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Confidence:</label>
+                    <span id="resultConfidence" class="result-value"></span>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceBar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="info-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Description</h3>
+                </div>
+                <p id="resultDescription"></p>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-header">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    <h3>Treatment</h3>
+                </div>
+                <p id="resultTreatment"></p>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Prevention</h3>
+                </div>
+                <p id="resultPrevention"></p>
+            </div>
+        </div>
+        
+        <div class="result-actions">
+            <button class="btn btn-primary" onclick="location.reload()">
+                <i class="fas fa-redo"></i> Analyze Another Image
+            </button>
+            {% if session.user_id %}
+            <a href="{{ url_for('history') }}" class="btn btn-outline">
+                <i class="fas fa-history"></i> View History
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Why Choose Our AI Detection?</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Fast & Accurate</h3>
+                <p>Get instant results with 95%+ accuracy using state-of-the-art deep learning models</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>AI-Powered</h3>
+                <p>Trained on thousands of plant images to identify 38+ different diseases</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Easy to Use</h3>
+                <p>Simple upload interface - just snap a photo and get instant diagnosis</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-prescription"></i>
+                </div>
+                <h3>Treatment Advice</h3>
+                <p>Receive detailed treatment recommendations for detected diseases</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3>Track History</h3>
+                <p>Keep records of all your plant diagnoses in one place</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Secure & Private</h3>
+                <p>Your data is encrypted and never shared with third parties</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+{% if not session.user_id %}
+<div class="cta-section">
+    <div class="container">
+        <h2>Ready to protect your plants?</h2>
+        <p>Create a free account to track your diagnoses and access more features</p>
+        <a href="{{ url_for('register') }}" class="btn btn-white btn-lg">
+            <i class="fas fa-user-plus"></i> Get Started Free
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Upload functionality
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const previewArea = document.getElementById('previewArea');
+const imagePreview = document.getElementById('imagePreview');
+const loadingArea = document.getElementById('loadingArea');
+const resultsSection = document.getElementById('resultsSection');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const changeBtn = document.getElementById('changeBtn');
+
+let selectedFile = null;
+
+// Click to upload
+uploadArea.addEventListener('click', () => {
+    fileInput.click();
+});
+
+// Drag and drop
+uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('drag-over');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('drag-over');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('drag-over');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        handleFile(files[0]);
+    }
+});
+
+// File input change
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+    }
+});
+
+// Handle file selection
+function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+    }
+    
+    selectedFile = file;
+    
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        imagePreview.src = e.target.result;
+        uploadArea.style.display = 'none';
+        previewArea.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// Change image
+changeBtn.addEventListener('click', () => {
+    previewArea.style.display = 'none';
+    uploadArea.style.display = 'flex';
+    selectedFile = null;
+    fileInput.value = '';
+});
+
+// Analyze image
+analyzeBtn.addEventListener('click', async () => {
+    if (!selectedFile) return;
+    
+    // Show loading
+    previewArea.style.display = 'none';
+    loadingArea.style.display = 'block';
+    
+    // Upload and analyze
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    
+    try {
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showResults(data);
+        } else {
+            alert('Error: ' + (data.error || 'Analysis failed'));
+            loadingArea.style.display = 'none';
+            previewArea.style.display = 'block';
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+        loadingArea.style.display = 'none';
+        previewArea.style.display = 'block';
+    }
+});
+
+// Show results
+function showResults(data) {
+    loadingArea.style.display = 'none';
+    resultsSection.style.display = 'block';
+    
+    // Set result values
+    document.getElementById('resultImage').src = imagePreview.src;
+    document.getElementById('resultPlant').textContent = data.plant;
+    document.getElementById('resultDisease').textContent = data.disease;
+    document.getElementById('resultConfidence').textContent = data.confidence + '%';
+    document.getElementById('confidenceBar').style.width = data.confidence + '%';
+    document.getElementById('resultDescription').textContent = data.description;
+    document.getElementById('resultTreatment').textContent = data.treatment;
+    document.getElementById('resultPrevention').textContent = data.prevention;
+    
+    // Scroll to results
+    resultsSection.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+{% endblock %}

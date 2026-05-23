@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}About - Plant Disease Detection{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="about-hero">
+            <h1>About Plant Disease Detection</h1>
+            <p class="lead">Empowering farmers and gardeners with AI-powered plant health monitoring</p>
+        </div>
+        
+        <!-- Mission Section -->
+        <div class="about-section">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+                    <p>
+                        We believe that every plant deserves the best care possible. Our mission is to make advanced 
+                        plant disease detection accessible to everyone, from home gardeners to large-scale farmers.
+                    </p>
+                    <p>
+                        Using state-of-the-art deep learning technology, we've trained our AI on thousands of plant 
+                        images to accurately identify 38+ different diseases across 14 plant species. Our goal is to 
+                        help you catch diseases early and take action before they spread.
+                    </p>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-leaf fa-10x text-success"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How It Works -->
+        <div class="how-it-works">
+            <h2><i class="fas fa-cogs"></i> How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-camera"></i></div>
+                    <h3>Upload Image</h3>
+                    <p>Take a clear photo of the affected plant leaf or fruit and upload it to our system</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-brain"></i></div>
+                    <h3>AI Analysis</h3>
+                    <p>Our deep learning model analyzes the image and compares it to thousands of disease patterns</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                    <h3>Get Results</h3>
+                    <p>Receive instant diagnosis with confidence score and detailed information about the disease</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-prescription-bottle-alt"></i></div>
+                    <h3>Take Action</h3>
+                    <p>Follow our recommended treatment and prevention measures to save your plants</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technology -->
+        <div class="technology-section">
+            <h2><i class="fas fa-microchip"></i> Technology</h2>
+            <div class="tech-content">
+                <p>
+                    Our plant disease detection system is powered by cutting-edge deep learning technology:
+                </p>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <i class="fab fa-python fa-3x"></i>
+                        <h4>TensorFlow & Keras</h4>
+                        <p>Deep learning frameworks for building and training our AI models</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-network-wired fa-3x"></i>
+                        <h4>CNN Architecture</h4>
+                        <p>Convolutional Neural Networks specialized for image recognition</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database fa-3x"></i>
+                        <h4>PlantVillage Dataset</h4>
+                        <p>Trained on 50,000+ images of healthy and diseased plant leaves</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                        <h4>95%+ Accuracy</h4>
+                        <p>Highly accurate predictions validated through extensive testing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Supported Plants -->
+        <div class="plants-section">
+            <h2><i class="fas fa-seedling"></i> Supported Plants</h2>
+            <div class="plants-grid">
+                <div class="plant-tag"><i class="fas fa-apple-alt"></i> Apple</div>
+                <div class="plant-tag"><i class="fas fa-leaf"></i> Blueberry</div>
+                <div class="plant-tag"><i class="fas fa-cherry"></i> Cherry</div>
+                <div class="plant-tag"><i class="fas fa-corn"></i> Corn (Maize)</div>
+                <div class="plant-tag"><i class="fas fa-wine-bottle"></i> Grape</div>
+                <div class="plant-tag"><i class="fas fa-lemon"></i> Orange</div>
+                <div class="plant-tag"><i class="fas fa-apple-alt"></i> Peach</div>
+                <div class="plant-tag"><i class="fas fa-pepper-hot"></i> Pepper (Bell)</div>
+                <div class="plant-tag"><i class="fas fa-potato"></i> Potato</div>
+                <div class="plant-tag"><i class="fas fa-raspberry-pi"></i> Raspberry</div>
+                <div class="plant-tag"><i class="fas fa-leaf"></i> Soybean</div>
+                <div class="plant-tag"><i class="fas fa-pumpkin"></i> Squash</div>
+                <div class="plant-tag"><i class="fas fa-strawberry"></i> Strawberry</div>
+                <div class="plant-tag"><i class="fas fa-tomato"></i> Tomato</div>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-banner">
+            <div class="stat-item-about">
+                <h3>50,000+</h3>
+                <p>Training Images</p>
+            </div>
+            <div class="stat-item-about">
+                <h3>38+</h3>
+                <p>Disease Classes</p>
+            </div>
+            <div class="stat-item-about">
+                <h3>14</h3>
+                <p>Plant Species</p>
+            </div>
+            <div class="stat-item-about">
+                <h3>95%</h3>
+                <p>Accuracy</p>
+            </div>
+        </div>
+        
+        <!-- Team/Contact -->
+        <div class="contact-section">
+            <h2><i class="fas fa-envelope"></i> Get in Touch</h2>
+            <p>Have questions or suggestions? We'd love to hear from you!</p>
+            <div class="contact-methods">
+                <a href="mailto:info@plantdisease.com" class="contact-btn">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+                <a href="#" class="contact-btn">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#" class="contact-btn">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
